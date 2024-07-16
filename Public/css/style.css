@@ -1,3 +1,10 @@
+
+.playwrite-hr-lijeva-mybody {
+  font-family: "Playwrite HR Lijeva", cursive !important;
+  font-optical-sizing: auto;
+  font-weight:200;
+  font-style: normal;
+}
 .navbar{
     background-color: white;
     height: 5rem;
@@ -29,4 +36,31 @@
 
 .f-info-links a:hover {
     text-decoration: underline;
+}
+
+/*styling for index page*/
+.card-img-top{
+    object-fit: cover !important;
+    width: 100% !important;
+    border-radius: 1rem !important;
+    height: 20rem !important;
+}
+
+.card{
+    margin-bottom: 2rem;
+    border: none;
+}
+
+.card-body{
+    padding: 0 !important;
+}
+.listing-link{
+    text-decoration: none !important;
+}
+.card-img-overlay{
+    opacity: 0;
+}
+.card-img-overlay:hover{
+    background-color: white;
+    opacity: 0.2;
 }
