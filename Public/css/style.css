@@ -1,16 +1,18 @@
-
-.playwrite-hr-lijeva-mybody {
-  font-family: "Playwrite HR Lijeva", cursive !important;
+body {
+  font-family: "Plus Jakarta Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight:200;
   font-style: normal;
+  /*display: flex;
+  flex-direction: column;
+  min-height: 100vh;*/
 }
 .navbar{
     background-color: white;
     height: 5rem;
 }
 .fa-compass{
-    color:fe424d;
+    color:#fe424d;
     font-size: 2rem;
 }
 .nav-link{
@@ -45,7 +47,10 @@
     border-radius: 1rem !important;
     height: 20rem !important;
 }
-
+.container{
+    min-height: 100vh;
+    flex:1;
+}
 .card{
     margin-bottom: 2rem;
     border: none;
@@ -53,9 +58,11 @@
 
 .card-body{
     padding: 0 !important;
+    font-weight: 400;
 }
 .listing-link{
     text-decoration: none !important;
+    color:inherit !important
 }
 .card-img-overlay{
     opacity: 0;
@@ -63,4 +70,16 @@
 .card-img-overlay:hover{
     background-color: white;
     opacity: 0.2;
+}
+.add-btn{
+    background-color: #fe424d;
+    border: none !important;
+}
+/* show page*/
+.listing-item{
+    list-style-type:none;
+    padding: 0;
+}
+.delete-btn{
+    border: none;
 }
