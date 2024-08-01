@@ -1,14 +1,51 @@
+<style>
+  .search-bar{
+    margin-top:1rem;
+  }
+  .search-icon{
+    display: inline;
+    margin-right: 0.5rem;
+  }
+  .search-button{
+    border-radius: 25px;
+    background-color:#fe424d;
+    color:white;
+    border:none;
+    padding:0 1rem 0 1rem;
+  }
+  .search-input{
+    border-radius: 25px;
+   padding :0.5rem 3rem 0.5rem 3rem;
+   margin-right:0.5rem
+  }
+  .heading{
+    color:#fe424d
+  }
+</style>
 <nav class="navbar navbar-expand-lg navbar-light sticky-top border-bottom">
-    <a class="navbar-brand" href="#"><i class="far fa-compass"></i>
+    <a class="navbar-brand ms-3" href="/listing"><i class="far fa-compass"></i>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link " href="http://localhost:8080/">Home <span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link" href="http://localhost:8080/listing">All listing</a>
-        <a class="nav-item nav-link" href="http://localhost:8080/listing/new">Add new listing</a>
+        <a class="nav-item nav-link" href="http://localhost:8080/listing"><h3 class="heading">StayEase</h3></a>
+      </div>
+      <div class="navbar-nav ms-auto search-bar">
+        <form class="d-flex" method="post" action="/listing/country">
+          <%-include('countrydropdown.ejs') %>
+          <button class="btn  btn-dark search-button" type="submit"><i class="fa-solid fa-magnifying-glass search-icon"></i>Search</button>
+        </form>
+      </div>
+      <div class="navbar-nav ms-auto">
+        <a class="nav-item nav-link" href="http://localhost:8080/listing/new">Register your space</a>
+        <% if(currUser){ %>
+          <a class="nav-item nav-link" href="http://localhost:8080/logout"><b>LogOut</b></a>
+        <% } else{ %>
+          <a class="nav-item nav-link " href="http://localhost:8080/signup"><b>SignUp</b> <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" href="http://localhost:8080/login"><b>LogIn</b></a>
+        <% } %>
       </div>
     </div>
-  </nav>
+</nav>

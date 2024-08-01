@@ -1,14 +1,22 @@
+if(process.env.NODE_ENV!="production"){
+    require('dotenv').config()
+}
 const express=require("express");
 const app=express();
 const mongoose=require("mongoose");
-const List=require("./models/listing.js")
 const path=require("path");
 const methodOverride=require('method-override');
 const MONGO_URL="mongodb://127.0.0.1:27017/stayease";
 const ejsmate=require("ejs-mate");
-
-
-
+const ExpressError=require("./utils/ExpressError.js");
+const listing=require('./routes/listing.js');
+const review=require('./routes/review.js');
+const session=require('express-session');
+const flash=require('connect-flash');
+const passport=require('passport');
+const LocalStartegy=require('passport-local');
+const User=require('./models/user.js');
+const user=require('./routes/user.js');
 async function main(){
     await mongoose.connect(MONGO_URL);
 }
@@ -19,12 +27,33 @@ main().then(()=>{
     console.log(err);
 })
 
+const sessionoptions={
+    resave:false,
+    saveUninitialized: true,
+    secret:"mysecretcode",
+    cookie:{
+        expires:Date.now()+7*24*60*60*1000,
+        maxAge:7*24*60*60*1000,
+        httpOnly:true,
+    }
+}
+
+
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
 app.engine('ejs', ejsmate);
 app.use(express.static(path.join(__dirname,'public')));
+app.use(session(sessionoptions));
+app.use(flash());
+
+//configuring passport
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStartegy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 app.listen(8080,()=>{
     console.log("server is listing on port 8080");
@@ -32,40 +61,27 @@ app.listen(8080,()=>{
 app.get('/',(req,res)=>{
     res.send('welcome to home page');
 })
-app.get('/listing/new',(req,res)=>{
-    res.render("listing/new.ejs");
-})
-app.get('/listing/:id',async (req,res)=>{
-    const {id}=req.params;
-    const list= await List.findById(id);
-    res.render("listing/show.ejs",{list});
-})
-app.get('/listing',async (req,res)=>{
-    const alllistings=await List.find({});
-    res.render('listing/index.ejs',{alllistings});
+
+app.use((req,res,next)=>{
+    res.locals.successmsg=req.flash("success");
+    res.locals.errormsg=req.flash("error");
+    res.locals.currUser=req.user;
+    res.locals.reqcountry=req.session.requestedcountry;
+    next();
 })
 
-app.post('/listing',async (req,res)=>{
-    const newlist=new List(req.body.listing);
-    await newlist.save();
-    res.redirect("/listing");
+app.use('/listing',listing);
+app.use('/listing/:id/reviews',review);
+app.use('',user);
+
+
+app.all("*",(req,res,next)=>{
+    next(new ExpressError(404,"page not found!"));
 })
 
-app.get('/listing/:id/edit',async (req,res)=>{
-    const {id}=req.params;
-    const list=await List.findById(id);
-    res.render('listing/edit.ejs',{list});
-
-})
-
-app.put('/listing/:id',async(req,res)=>{
-    const {id}=req.params;
-    const updatedlisting =await List.findByIdAndUpdate(id,{...req.body.listing});
-    res.redirect(`/listing/${id}`);
-})
-
-app.delete('/listing/:id',async (req,res)=>{
-    let {id}=req.params;
-    await List.findByIdAndDelete(id);
-    res.redirect('/listing');
+//error handling middleware
+app.use((err,req,res,next)=>{
+    let {statuscode=500,message="something went wrong"}=err;
+    console.log(err);
+    res.status(statuscode).render('error.ejs',{message});
 })

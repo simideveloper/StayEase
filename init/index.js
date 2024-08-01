@@ -15,6 +15,7 @@ main().then(()=>{
 
 const initDB= async ()=>{
     await List.deleteMany({});
+    initdata.data=initdata.data.map((ele)=>{return {...ele ,owner:'66a5e81ce2f7a26ebce8eb94'}});
     await List.insertMany(initdata.data);
 }
 

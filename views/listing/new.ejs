@@ -1,38 +1,63 @@
 <% layout('layouts/boilerplate.ejs')-%>
 <body>
     <div class="row offset-1 mt-3">
-        <div class="col-lg-10">
-        <h3>Create a New Listing</h3>
-        <form method="post" action="/listing">
-            <div class="mb-3">
-                <label for="listing-title" class="form-label">Title</label>
-                <input name="listing[title]" placeholder="Enter a catchy title" type="text"class="form-control" id="listing-title">
-            </div>
-            <div class="mb-3">
-                <label for="listing-description" class="form-label">Description</label>
-                <textarea name="listing[description]" placeholder="Enter description" class="form-control" id="listing-title"></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="listing-image" class="form-label">Image-url</label>
-                <input name="listing[image]" placeholder="Enter image url" type="text" class="form-control" id="listing-image">
-            </div>
-            <div class="row">
-                <div class="mb-3 col-md-4">
-                    <label for="listing-price" class="form-label">Price</label>
-                    <input name="listing[price]" placeholder="Enter price" type="number" class="form-control" id="listing-price">
+        <div class="col-lg-8 offset-1 ">
+            <h3>Create a New Listing</h3>
+            <form  method="post" action="/listing" class="needs-validation" novalidate enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label for="listing-title" class="form-label">Title</label>
+                    <input required name="listing[title]" placeholder="Enter a catchy title" type="text"class="form-control" id="listing-title">
+                    <div class="valid-feedback">Title looks good</div>
+                    <div class="invalid-feedback">Please enter a title</div>
                 </div>
-                <div class="mb-3 col-md-8">
-                    <label for="listing-location" class="form-label">Location</label>
-                    <input name="listing[location]" placeholder="Enter location" type="text" class="form-control" id="listing-location">
+                <div class="mb-3">
+                    <label for="listing-description" class="form-label">Description</label>
+                    <textarea  required name="listing[description]" placeholder="Enter description" class="form-control" id="listing-title"></textarea>
+                    <div class="invalid-feedback">Description should be valid</div>
                 </div>
-            </div>
-            <div class="mb-3">
-                <label for="listing-country" class="form-label">Country</label>
-                <input name="listing[country]" placeholder="Enter country" type="text" class="form-control" id="listing-country">
-            </div>
-            <button type="submit" class="btn btn-dark add-btn mt-3">Add</button>
-    </form>
-    </div>
+                <div class="mb-3">
+                    <label for="listing-image" class="form-label">Upload Image</label>
+                    <input name="listing[image]" placeholder="Enter image url" type="file" class="form-control" id="listing-image" required>
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-md-4">
+                        <label for="listing-price" class="form-label">Price</label>
+                        <input name="listing[price]" type="number" placeholder="Enter price"  class="form-control" id="listing-price" required>
+                        <div class="invalid-feedback">Price should be valid</div>
+                    </div>
+                    <div class="mb-3 col-md-8">
+                        <label for="listing-category" class="form-label">Category</label>
+                        <select name="listing[category]" id="listing-category" class="form-control" required>
+                            <option disabled selected>Select a property type</option>
+                            <option value="Amazing Pools">Amazing Pools</option>
+                            <option value="Farms">Farms</option>
+                            <option value="Lakefront">Lakefront</option>
+                            <option value="Top of World">Mountains</option>
+                            <option value="Beachfront">Beachfront</option>
+                            <option value="Castles">Castles</option>
+                            <option value="Arctic">Arctic</option>
+                            <option value="HouseBoats">HouseBoats</option>
+                            <option value="Treehouses">Treehouses</option>
+                            <option value="Camping">Camping</option>
+                        </select>
+                        <div class="invalid-feedback">Please select category for your property!</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="mb-3 col-md-4">
+                        <label for="listing-location" class="form-label">Location</label>
+                        <input name="listing[location]" placeholder="Enter location" type="text" class="form-control" id="listing-location" required>
+                        <div class="invalid-feedback">Location should be valid</div>
+                    </div>
+                    <div class="mb-3 col-md-8">
+                        <label for="listing-country" class="form-label">Country</label>
+                        <input name="listing[country]" placeholder="Enter country" type="text" class="form-control" id="listing-country" required>
+                        <div class="invalid-feedback">Country name should be valid</div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-dark add-btn mt-3">Add</button>
+            </form>
+        </div>
     </div>
 </body>
 

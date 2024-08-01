@@ -3,9 +3,9 @@ body {
   font-optical-sizing: auto;
   font-weight:200;
   font-style: normal;
-  /*display: flex;
+  display: flex;
   flex-direction: column;
-  min-height: 100vh;*/
+  min-height: 100vh;
 }
 .navbar{
     background-color: white;
@@ -48,12 +48,11 @@ body {
     height: 20rem !important;
 }
 .container{
-    min-height: 100vh;
-    flex:1;
+    flex-grow:1;
 }
-.card{
+.listing-card{
     margin-bottom: 2rem;
-    border: none;
+    border: none !important;
 }
 
 .card-body{
@@ -82,4 +81,16 @@ body {
 }
 .delete-btn{
     border: none;
+}
+
+
+/* Map */
+#map{
+    height: 400px;
+    width:80vh;
+}
+
+/* tax-info */
+.tax-info{
+    display: none;
 }
